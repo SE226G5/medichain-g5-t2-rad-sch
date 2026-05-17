@@ -93,7 +93,7 @@ When a payload receives "deviceStatus": "OFFLINE_FAULT", the system automaticall
 Data Action: Extracts all appointmentIds linked to that machineId for future slots, recalculates new slots for them in other functional machines (or shifts them), and pushes payload payloads to the Notification Service Queue (SMS/Email API) to alert patients.
 
 ### 3.2 System Features & User Stories
-#### 3.2.1 Feature: Appointment Creation
+#### 3.2.1 Feature1: Appointment Creation
 *   **Description:** Enabling the receptionist to create an X-ray appointment for the patient.
 *   **Priority:** High.
 *   **User Stories:**
@@ -104,65 +104,87 @@ Data Action: Extracts all appointmentIds linked to that machineId for future slo
                                  The appointment cannot be saved without patient information.
                                  The appointment cannot be confirmed if preparation instructions are missing.
         * *GitHub Issue:* [ ]
-   *   Feature:
-*   **Description:** 
+   *   Feature2:Automatic Slot Optimization
+*   **Description:** The system automatically selects the best available time when there are multiple requests on the same device.
 *   **Priority:** High.
 *   **User Stories:**
-    *  Story 1:
-        * *Acceptance Criteria:* Selecting the type of examination is mandatory.
-                                 Specifying the examination duration is mandatory.
-                                  Selecting the equipment is mandatory.
-                                 The appointment cannot be saved without patient information.
-                                 The appointment cannot be confirmed if preparation instructions are missing.
+    *  Story 1:As a system, I want to automatically select the best available appointment slot for a device so that scheduling is optimized according to exam duration, request order, and                 case priority.
+        * *Acceptance Criteria:* The system does not select a time that exceeds the device's capacity.
+                                  The system takes into account the duration of each scan.
+                                  Higher priority cases are prioritized in case of conflict.
+                               When priorities are equal, the system relies on the order of requests.
         * *GitHub Issue:* [ ]
-      *   Feature:
-*   **Description:** 
+      *   Feature3:Preparation Instructions Management
+*   **Description:** Managing the preparation instructions required before each examination.
 *   **Priority:** High.
 *   **User Stories:**
-    *  Story 1:
-        * *Acceptance Criteria:* Selecting the type of examination is mandatory.
-                                 Specifying the examination duration is mandatory.
-                                  Selecting the equipment is mandatory.
-                                 The appointment cannot be saved without patient information.
-                                 The appointment cannot be confirmed if preparation instructions are missing.
+    *  Story 1:As a Administrater Staff(receptionist), I want to add preparation instructions when creating an appointment so that the patient receives the required instructions before
+                the exam.
+        * *Acceptance Criteria:* Preparation instructions field is mandatory before confirmation.
+                                  The status cannot be changed to Confirmed without instructions.
+                                  Instructions are saved with the appointment.
+                                  Instructions are sent to the notification system after saving.
         * *GitHub Issue:* [ ]
-         *   Feature:
-*   **Description:** 
+         *   Feature4:Notification Delivery
+*   **Description:** Sending notifications to the patient when an appointment is created, modified, or rescheduled.
 *   **Priority:** High.
 *   **User Stories:**
-    *  Story 1:
-        * *Acceptance Criteria:* Selecting the type of examination is mandatory.
-                                 Specifying the examination duration is mandatory.
-                                  Selecting the equipment is mandatory.
-                                 The appointment cannot be saved without patient information.
-                                 The appointment cannot be confirmed if preparation instructions are missing.
+    *  Story 1:As a notification system, I want to receive appointment events so that I can notify the patient about the booking status.
+        * *Acceptance Criteria:* Send notification when appointment is created
+                                  Send notification when appointment is modified
+                                  Send notification when rescheduled
+                                  Submission status log: Success / Failed
         * *GitHub Issue:* [ ]
-         *   Feature:
-*   **Description:** 
+         *   Feature5:Rescheduling After Device Failure
+*   **Description:** If the device malfunctions, all affected appointments should be automatically rescheduled.
 *   **Priority:** High.
 *   **User Stories:**
-    *  Story 1:
-        * *Acceptance Criteria:* Selecting the type of examination is mandatory.
-                                 Specifying the examination duration is mandatory.
-                                  Selecting the equipment is mandatory.
-                                 The appointment cannot be saved without patient information.
-                                 The appointment cannot be confirmed if preparation instructions are missing.
+    *  Story 1:As a system, I want to reschedule all appointments affected by device downtime so that patients are assigned new available slots automatically.
+        * *Acceptance Criteria:* Identify all appointments associated with the malfunctioning machine.
+                                  Reschedule them to suitable new dates.
+                                  Maintain priority order as much as possible.
+                                  Notify the patient and receptionist of the change.
+                                  Record the reason for rescheduling.
+        * *GitHub Issue:* [ ]
+           *   Feature6:Appointment Status Tracking
+*   **Description:** Track the status of the appointment from its creation to its confirmation, rescheduling, or cancellation.
+*   **Priority:** High.
+*   **User Stories:**
+    *  Story 1:As a receptionist, I want to view the current status of each appointment so that I can manage patient scheduling effectively.
+        * *Acceptance Criteria:* Clearly display the current status.
+                                  Update the status in real time or after any modification.
+                                  Save the change log.
         * *GitHub Issue:* [ ]
 
 *   [Repeat the structure above for all module features].
 
 ### 3.3 Performance Requirements
-* **Instruction:** Specify quantitative limits. (e.g., "The module must return query results in under 2 seconds for up to 50 concurrent users").
-
+* The system response time should be less than two seconds for most operations.
+* System pages should load in less than three seconds.
+* The system should support at least 100 concurrent users.
+* The system should be able to process a large number of appointment requests without crashing or experiencing significant slowdowns.
+* Patient and appointment searches should be fast and accurate.
+* Patient and appointment data should be saved instantly and securely.
+* Radiology report retrieval time should be less than five seconds.
+* The system must support the storage of a large number of patient records and radiology reports.
+* The system must function efficiently across various modern browsers.
+* The system must operate stably for extended periods without sudden downtime.
+* System availability must be at least 99%.
+* The intelligent system must suggest a suitable appointment time in less than 3 seconds.
+* The intelligent system must minimize appointment scheduling conflicts.
+* The system must support the prioritization of emergency cases.
+* The database must be capable of executing queries quickly and efficiently.
 ### 3.4 Logical Database Requirements
-* **Instruction:** Describe the data entities managed by your module. If you are using a shared database, specify which tables your team is responsible for. (Include ERD models in the Appendix).
-
+* The system shall store patient data, exam requests, appointment records, device availability, preparation instructions, notification logs, and rescheduling history.
+The Appointment entity shall reference a Patient, a Device, and a RadiologyExam.
+The PreparationInstruction entity shall be mandatory before appointment confirmation.
+The RescheduleLog entity shall keep track of all appointments modified due to device downtime.
 ### 3.5 Software System Attributes
-* **Instruction:** Define the Non-Functional Requirements (NFRs) for your module:
-  * **Reliability:** [Acceptable failure rates].
-  * **Security:** [Authentication methods, data encryption protocols].
-  * **Maintainability & Portability:** [Coding standards, documentation rules].
-
+* Resource consumption should be reduced to improve system performance.
+* The system should support data backup without impacting performance.
+* Appointment status should be updated immediately upon any modification.
+* Login processes should be secure and fast.
+* The system should be able to handle future increases in the number of users without a significant drop in performance.
 ---
 
 ## 4. Appendices
