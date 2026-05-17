@@ -13,7 +13,13 @@ Date: [2026-05-13]
 * The Imaging & Radiology Scheduling System is designed to improve the management of radiology appointments and optimize the use of MRI and CT devices within healthcare facilities 1.2.1.The system will: Schedule MRI and CT scan appointments. Manage patient preparation instructions Automatically select the best available appointment Handle appointment prioritization based on urgency Send notifications to patients. Automatically reschedule appointments in case of machine failure Prevent overlapping appointments on the same device 1.2.2.The system will NOT: Perform medical diagnosis Manage payroll or human resources Manage non-radiology hospital departments Replace medical staff decision-making Store medical imaging files
 
 ### 1.3 Definitions, Acronyms, and Abbreviations
-* **Instruction:** Provide a table defining all technical terms, acronyms, or domain-specific language (e.g., medical terms, API, ERP) used in this document so all teams share a common understanding.
+* MRI: Magnetic Resonance Imaging
+* CT: Computed Tomography
+* RAD-SCH: Radiology Scheduling Module
+* Appointment: Scheduled radiology examination
+* Preparation Instructions: Instructions given to patients before examination
+* Notification: Alert sent to the patient
+
 
 ### 1.4 References
 * 1.IEEE 830 Software Requirements Specification Standard. 2.MediChain System Documentation 3.Software Engineering Course Materials 4.UML Modeling References 5.Project Analysis Documents prepared by the RAD-SCH Team
@@ -67,26 +73,82 @@ Network Connectivity: A stable and continuous network connection is required to 
 ---
 
 ## 3. Specific Requirements (Agile Approach)
-* **Instruction:** This section translates traditional functional requirements into Agile User Stories. Every feature must be traceable to the project management board.
-
+The system shall provide a scheduling interface where the receptionist can create, modify, and reschedule radiology appointments. The interface shall require the exam type, estimated duration, assigned device, and preparation instructions before an appointment can be confirmed. The system shall also expose notification events to the notification service when an appointment is created, updated, or rescheduled.
 ### 3.1 External Interface Requirements
-* **Instruction:** Detail the exact data formats, API endpoints, and UI layouts needed for the interfaces mentioned in section 2.1.
+* 3.1.1 UI-01: Smart Scheduling DashboardDescription: A consolidated calendar view for radiology department staff displaying daily/weekly slots for CT and MRI machines.Layout Requirements:A sidebar displaying the automated waiting queue prioritized by the system algorithm.Visual indicators (color-coded) for slot status: Available (Green), Booked & Confirmed (Blue), Booked but Pending Preparation Instructions (Yellow), Device Out-of-Service (Red).A "Re-schedule All" button visible only to admins when a machine status changes to "Down".UI-02: Patient Appointment & Preparation FormLayout Requirements: A form to create/confirm appointments. It must contain a mandatory checklist or text area for "Preparation Instructions" (e.g., fasting requirements for CT). The "Confirm Booking" button remains disabled ($disabled=true$) until the preparation instructions are filled or selected.
+* 3.1.2 Software & API Interfaces
+  A. Appointment Creation & Auto-Scheduling API:
+Endpoint: POST /api/v1/appointments/schedule-auto
+Data Format: JSON
+  -Logic (Hybrid Context): The system processing this API will execute the sorting algorithm based on: $Duration + FIFO + Urgency$. It returns the best recommended slot.
+  -Response (Success - 200 OK): Returns recommended slotId, machineId, and sets status to Pending_Instructions.
+  B. Booking Confirmation & Notification APIEndpoint: PUT /api/v1/appointments/{appointmentId}/confirmData.
+  Format: JSON ,Validation Rule: If preparationInstructions field is null or empty, the API returns 400 Bad Request (Validation Failed).
+  * 3.1.3 Hardware Interfaces:
+    HI-01: Radiology Equipment Status Interface (IoT/DICOM Gateway)
+Description: The system listens to status heartbeats from the CT/MRI machinery or the hospital's central maintenance system.
+Data Format: Continuous stream via WebSockets or Webhooks.
+Trigger Event (Device Failure):
+When a payload receives "deviceStatus": "OFFLINE_FAULT", the system automatically triggers the Bulk Fault-Rescheduling Service.
+Data Action: Extracts all appointmentIds linked to that machineId for future slots, recalculates new slots for them in other functional machines (or shifts them), and pushes payload payloads to the Notification Service Queue (SMS/Email API) to alert patients.
 
 ### 3.2 System Features & User Stories
-* **Instruction:** Organize your requirements by Feature. For each feature, write the underlying requirements as User Stories and link them to your GitHub Issues.
-
-#### 3.2.1 Feature: [Insert Feature Name, e.g., Patient Registration]
-*   **Description:** [Briefly describe the feature].
-*   **Priority:** [High / Medium / Low].
+#### 3.2.1 Feature: Appointment Creation
+*   **Description:** Enabling the receptionist to create an X-ray appointment for the patient.
+*   **Priority:** High.
 *   **User Stories:**
-    *   **Story 1:** As a [User Role], I want to [Action/Goal] so that [Benefit/Value]. 
-        * *Acceptance Criteria:* [List what must be true for this to be considered 'Done'].
-        * *GitHub Issue:* [Link to Issue, e.g., #12]
-    *   **Story 2:** As a [User Role], I want to [Action/Goal] so that [Benefit/Value].
-        * *Acceptance Criteria:* [List criteria].
-        * *GitHub Issue:* [Link to Issue, e.g., #13]
+    *  Story 1:As a receptionist, I want to create a radiology appointment for a patient so that the patient can be scheduled for CT or MRI.
+        * *Acceptance Criteria:* Selecting the type of examination is mandatory.
+                                 Specifying the examination duration is mandatory.
+                                  Selecting the equipment is mandatory.
+                                 The appointment cannot be saved without patient information.
+                                 The appointment cannot be confirmed if preparation instructions are missing.
+        * *GitHub Issue:* [ ]
+   *   Feature:
+*   **Description:** 
+*   **Priority:** High.
+*   **User Stories:**
+    *  Story 1:
+        * *Acceptance Criteria:* Selecting the type of examination is mandatory.
+                                 Specifying the examination duration is mandatory.
+                                  Selecting the equipment is mandatory.
+                                 The appointment cannot be saved without patient information.
+                                 The appointment cannot be confirmed if preparation instructions are missing.
+        * *GitHub Issue:* [ ]
+      *   Feature:
+*   **Description:** 
+*   **Priority:** High.
+*   **User Stories:**
+    *  Story 1:
+        * *Acceptance Criteria:* Selecting the type of examination is mandatory.
+                                 Specifying the examination duration is mandatory.
+                                  Selecting the equipment is mandatory.
+                                 The appointment cannot be saved without patient information.
+                                 The appointment cannot be confirmed if preparation instructions are missing.
+        * *GitHub Issue:* [ ]
+         *   Feature:
+*   **Description:** 
+*   **Priority:** High.
+*   **User Stories:**
+    *  Story 1:
+        * *Acceptance Criteria:* Selecting the type of examination is mandatory.
+                                 Specifying the examination duration is mandatory.
+                                  Selecting the equipment is mandatory.
+                                 The appointment cannot be saved without patient information.
+                                 The appointment cannot be confirmed if preparation instructions are missing.
+        * *GitHub Issue:* [ ]
+         *   Feature:
+*   **Description:** 
+*   **Priority:** High.
+*   **User Stories:**
+    *  Story 1:
+        * *Acceptance Criteria:* Selecting the type of examination is mandatory.
+                                 Specifying the examination duration is mandatory.
+                                  Selecting the equipment is mandatory.
+                                 The appointment cannot be saved without patient information.
+                                 The appointment cannot be confirmed if preparation instructions are missing.
+        * *GitHub Issue:* [ ]
 
-#### 3.2.2 Feature: [Insert Feature Name]
 *   [Repeat the structure above for all module features].
 
 ### 3.3 Performance Requirements
