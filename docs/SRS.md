@@ -25,7 +25,7 @@ Date: [2026-05-13]
 * 1.IEEE 830 Software Requirements Specification Standard. 2.MediChain System Documentation 3.Software Engineering Course Materials 4.UML Modeling References 5.Project Analysis Documents prepared by the RAD-SCH Team
 
 ### 1.5 Overview
-* **Instruction:** Briefly explain how the rest of this SRS document is organized.
+* This Software Requirements Specification (SRS) document is organized into four main sections.Section 1 introduces the purpose, scope, terminology, references, and overall organization of the document.Section 2 provides a high-level description of the radiology appointment scheduling system, including system perspective, interfaces, user characteristics, operational constraints, and major system functions.Section 3 defines the detailed functional and non-functional requirements using a hybrid Agile-oriented structure. Functional requirements are represented as features and user stories with acceptance criteria and GitHub traceability references.Section 4 contains supporting appendices, including diagrams, database models, UI mockups, and requirement traceability artifacts.This document follows a hybrid requirements engineering approach that combines traditional IEEE-style software specification with Agile user-story-based requirement definition. The document is structured to provide both high-level architectural understanding and detailed traceable implementation requirements for the radiology scheduling system.
 
 ---
 
