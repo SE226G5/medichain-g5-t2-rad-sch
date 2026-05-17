@@ -1,27 +1,22 @@
-﻿# Software Requirements Specification (SRS)
-## Project: [Insert the Parent System Name, e.g., Hospital ERP System]
-## Module/Subsystem: [Insert Your Module Name, e.g., Laboratory Management, Clinical System, OR "Master Integration System" if you are the integration team]
-**Version:** 1.0  
-**Date:** [YYYY-MM-DD]
-
+Software Requirements Specification (SRS)
+Project: [Medical Laboratory Chain Management System (MediChain)]
+Module/Subsystem: [Imaging & Radiology Scheduling]
+Version: 1.0
+Date: [2026-05-13]
 ---
 
 ## 1. Introduction
 ### 1.1 Purpose
-* **Instruction:** Describe the specific purpose of this document. Who is the intended audience? If you are a subsystem team, explain how this document defines your specific module. If you are the Integration Team (Team Leaders), explain how this document governs the entire system.
+* This document presents the Software Requirements Specification (SRS) for the Imaging & Radiology Scheduling System (RAD-SCH). The purpose of this document is to define the functional and non-functional requirements of the system and provide a clear reference for developers, analysts, testers, and project stakeholders.The RAD-SCH module is part of the MediChain healthcare system and is responsible for managing MRI and CT scan appointments, scheduling operations, patient preparation instructions, notification services, and automatic rescheduling processes in case of device failures.
 
 ### 1.2 Scope
-* **Instruction:** Define the boundaries of your system. 
-  * What are the core goals and benefits?
-  * **Crucial:** Explicitly list what your system *will* do and what it *will NOT* do to prevent overlap with other teams.
+* The Imaging & Radiology Scheduling System is designed to improve the management of radiology appointments and optimize the use of MRI and CT devices within healthcare facilities 1.2.1.The system will: Schedule MRI and CT scan appointments. Manage patient preparation instructions Automatically select the best available appointment Handle appointment prioritization based on urgency Send notifications to patients. Automatically reschedule appointments in case of machine failure Prevent overlapping appointments on the same device 1.2.2.The system will NOT: Perform medical diagnosis Manage payroll or human resources Manage non-radiology hospital departments Replace medical staff decision-making Store medical imaging files
 
 ### 1.3 Definitions, Acronyms, and Abbreviations
 * **Instruction:** Provide a table defining all technical terms, acronyms, or domain-specific language (e.g., medical terms, API, ERP) used in this document so all teams share a common understanding.
 
 ### 1.4 References
-* **Instruction:** List all referenced documents. This must include:
-  * IEEE 830 Standard.
-  * Links to shared architectural documents or API contracts agreed upon with the Integration Team.
+* 1.IEEE 830 Software Requirements Specification Standard. 2.MediChain System Documentation 3.Software Engineering Course Materials 4.UML Modeling References 5.Project Analysis Documents prepared by the RAD-SCH Team
 
 ### 1.5 Overview
 * **Instruction:** Briefly explain how the rest of this SRS document is organized.
@@ -30,25 +25,44 @@
 
 ## 2. Overall Description
 ### 2.1 Product Perspective
-* **Instruction:** Explain how your software fits into the bigger picture. 
-  * **For Subsystem Teams:** State clearly that your module is a component of a larger system. How does it interact with the master database or other modules?
-  * **For the Integration Team:** Provide the high-level block diagram showing all subsystems and their connection points.
+* RAD-SCH is a specialized software system designed to manage and schedule medical radiology appointments (e.g., CT and MRI scans) within a laboratory environment. The system aims to optimize the operational efficiency of radiology equipment through intelligent scheduling. This logic incorporates several critical factors, including scan duration, clinical case priority, and available device capacity. RAD-SCH operates as an integral component of a larger Hospital Management System (HMS), interfacing seamlessly with Patient Management and Notification systems. It is engineered to minimize idle time between appointments and enhance the overall patient experience through precise coordination and automated rescheduling in the event of equipment downtime or technical failures. From a technical standpoint, the system follows a Client-Server architecture: Backend (Server-side): Responsible for processing the core scheduling logic and data management. Frontend (Client-side): Provides the user interface for data visualization, interaction, and administrative control.
 
-*   **2.1.1 System Interfaces:** [List the exact integration points and APIs your module exposes to, or consumes from, other teams].
-*   **2.1.2 User Interfaces:** [Describe the logical characteristics of your UI. Are you following a shared design system?].
-*   **2.1.3 Hardware Interfaces:** [List any required hardware, e.g., barcode scanners for labs, or state "None"].
-*   **2.1.4 Software Interfaces:** [Specify OS requirements, database dependencies, or third-party libraries].
-*   **2.1.5 Communications Interfaces:** [Define networking protocols used, e.g., HTTP/REST, WebSockets].
-*   **2.1.6 Memory & Operational Constraints:** [State minimum RAM, storage, and normal operating assumptions].
+*   **2.1.1 System Interfaces:The system interacts with several internal and external interfaces to ensure seamless operations and full functionality: RESTful API Interfaces:Used to facilitate secure and efficient data exchange between the Frontend (Client) and the Backend (Server). Patient Management System (PMS) Interface:Integrates with the existing hospital Patient Management System to retrieve, synchronize, and update patient records and clinical data. Notification System Interface:Responsible for triggering and sending automated notifications to patients through multiple channels, including: Email: For detailed appointment confirmations and preparation instructions. Short Message Service (SMS): For quick reminders and urgent rescheduling alerts. Scheduling Engine Interface: An internal interface that connects the system’s core logic with the specialized scheduling module, which is responsible for executing the intelligent optimization algorithms
+*   **2.1.2 User Interfaces:The system provides intuitive and user-friendly interfaces tailored to different user roles: Main Dashboard: Provides a high-level overview of device statuses, upcoming appointments, and system alerts. Appointment Scheduling Interface: A dedicated module for entering examination requests and managing schedule slots. Device Management Interface: Used to manage and monitor MRI and CT equipment status (Available, Maintenance/Down, In-Use). Calendar View Interface: Offers a visual representation of scheduled appointments with Daily and Weekly viewing modes. Notification Interface: Displays logs and statuses of all messages and alerts sent to patients.
+*   **2.1.3 Hardware Interfaces:The system interacts with the following hardware components indirectly (Administrative management rather than direct operational control): MRI (Magnetic Resonance Imaging) Machines CT (Computed Tomography) Scanners Note: The system does not interface with the hardware’s internal operating software; instead, it manages usage schedules based on the temporal capacity and availability of each device.
+*   **2.1.4 Software Interfaces:The system is built upon a modern technology stack to ensure scalability and performance: Frontend Framework: React.js Backend Framework: Node.js or C# (.NET Core) Database Management System (DBMS): MySQL or Microsoft SQL Server Notification Services: External APIs for Email (e.g., SendGrid) and SMS (e.g., Twilio) Authentication System: Secure JWT-based (JSON Web Token) authentication mechanism.
+*   **2.1.5 Communications Interfaces:Standard communication protocols are utilized to ensure secure and high-speed data exchange: HTTP / HTTPS Protocols: To secure communication between the Client and the Server. REST API Communication: For data exchange using the JSON format. Asynchronous Communication: Employed for sending notifications to prevent blocking the main system performance. Real-Time Data Synchronization: Supports immediate updates across interfaces when appointment statuses or device availabilities change
+*   **2.1.6 Memory & Operational Constraints: A. Memory Constraints (Minimum Requirements): erver-Side: RAM: Minimum 8 GB (16 GB recommended for high-load environments to handle concurrent scheduling requests). Storage: 100 GB SSD (Primary focus on Database growth and logging). Client-Side (User PC):RAM: Minimum 4 GB. Web Browser: Modern browser support (Chrome 90+, Firefox 85+, or Edge) with JavaScript enabled. B. Operational Assumptions: Network Availability: The system assumes a stable internal network (Intranet) or Internet connection with a minimum bandwidth of 10 Mbps to ensure real-time synchronization between the hospital departments. Availability: Since radiology departments often work around the clock, the system is assumed to operate 24/7 with a target uptime of 99.9%. Database Scalability: It is assumed that the database will store text-based records and metadata for years, while actual high-resolution medical images (DICOM) are stored on a separate PACS server (if applicable). Concurrent Users: The system is designed to handle at least 50–100 concurrent users (receptionists, technicians, and admins) without significant latency in the scheduling engine. Backup & Recovery: Daily automated backups of the database are assumed to be performed to prevent data loss in case of hardware failure.
 
 ### 2.2 Product Functions
-* **Instruction:** Provide a high-level, bulleted summary of the major functions your software performs. Do not go into deep detail here (save it for Section 3).
+* The system provides the following core functionalities:
+Automated and Manual Scheduling: Supports both intelligent automated slot allocation and manual booking for CT and MRI examinations.
+Equipment Capacity Management: Manages radiology device workloads and ensures optimal distribution of appointments across available units.
+Pre-Confirmation Instructions: Automatically dispatches specific preparation guidelines to patients before any appointment is finalized.
+Automated Fault-Rescheduling: Triggers an immediate rescheduling logic to handle appointment conflicts arising from equipment downtime or technical failures.
+Multi-Channel Notifications: Sends real-time updates, reminders, and change alerts to patients regarding their scheduled appointments.
+Dynamic Request Prioritization: Sorts and prioritizes examination requests based on:
+Scan Duration: Time required for the specific procedure.
+Clinical Priority: The medical urgency of the patient's condition.
+Precision Timeline Visualization: Provides a highly accurate, real-time visual timeline (Gantt-style) of device utilization and availability.
 
 ### 2.3 User Characteristics
-* **Instruction:** Who will use your specific module? (e.g., Lab Technicians, Doctors, System Admins). Describe their technical expertise level.
+* The system is designed for various types of users, each with distinct roles and responsibilities:
+Receptionist / Scheduler: Responsible for inputting examination requests and managing the appointment booking process.
+Doctor: Responsible for assessing and determining the Clinical Priority of the patient's medical condition.
+Radiology Technician: Monitors equipment status and reports hardware failures or maintenance requirements.
+System Administrator: Manages the entire system, oversees general configurations, and handles user access controls.
+User Expertise Level: All user classes are expected to have basic proficiency in operating medical software systems; however, they are not required to have advanced technical or     
+programming expertise.
 
 ### 2.4 Constraints, Assumptions, and Dependencies
-* **Instruction:** List any factors that limit your development (e.g., medical data privacy laws, reliance on another team finishing their API first, specific coding languages mandated).
+* The operational success and accuracy of the system depend on several internal and external factors:
+Data Accuracy & Availability: The system assumes the availability of precise and up-to-date patient records and appointment history.
+External Notification Services: Dependency on third-party Email and SMS gateways to ensure the delivery of patient notifications.
+Hardware Availability: The scheduling logic operates within the defined operational capacity and availability of the MRI and CT scanners.
+User Input Integrity: The effectiveness of the scheduling engine relies on the accuracy of the medical data and priority levels entered by the users (Doctors and Receptionists).
+Algorithmic Logic: The system’s performance is dependent on an Intelligent Scheduling Algorithm that is dynamically influenced by case priority and time constraints.
+Network Connectivity: A stable and continuous network connection is required to guarantee real-time data synchronization and updates across the platform.
 
 ---
 
