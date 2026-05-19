@@ -1,0 +1,243 @@
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+enum PriorityLevel
+{
+    LOW = 1,
+    MEDIUM = 2,
+    HIGH = 3,
+    EMERGENCY = 4
+};
+
+class Appointment
+{
+public:
+    int appointmentId;
+    string patientName;
+    string examType;
+    int duration; // minutes
+    string deviceName;
+    string appointmentTime;
+    PriorityLevel priority;
+    string preparationInstructions;
+    bool confirmed;
+
+    Appointment(
+        int id,
+        string patient,
+        string exam,
+        int dur,
+        string device,
+        string time,
+        PriorityLevel pr,
+        string prep
+    )
+    {
+        appointmentId = id;
+        patientName = patient;
+        examType = exam;
+        duration = dur;
+        deviceName = device;
+        appointmentTime = time;
+        priority = pr;
+        preparationInstructions = prep;
+        confirmed = false;
+    }
+};
+
+class Device
+{
+public:
+    int deviceId;
+    string deviceName;
+    bool available;
+    vector<string> availableSlots;
+
+    Device(int id, string name, bool status)
+    {
+        deviceId = id;
+        deviceName = name;
+        available = status;
+    }
+};
+
+class AppointmentScheduler
+{
+public:
+
+    // =========================================================
+    // 1. اختيار أفضل موعد تلقائيًا
+
+    Appointment findBestAvailableSlot(
+        string patientName,
+        string examType,
+        int duration,
+        PriorityLevel priority,
+        vector<Device>& devices
+    )
+    {
+        for (Device& device : devices)
+        {
+            if (device.available && !device.availableSlots.empty())
+            {
+                string bestSlot = device.availableSlots[0];
+
+                cout << "Best slot selected on device: "
+                     << device.deviceName << endl;
+
+                return Appointment(
+                    1,
+                    patientName,
+                    examType,
+                    duration,
+                    device.deviceName,
+                    bestSlot,
+                    priority,
+                    ""
+                );
+            }
+        }
+
+        throw runtime_error("No available slots found.");
+    }
+
+    // =========================================================
+    // 2. التحقق من تعليمات التحضير
+
+    bool validatePreparationInstructions(Appointment& appointment)
+    {
+        if (appointment.preparationInstructions.empty())
+        {
+            cout << "Preparation instructions are required."
+                 << endl;
+
+            return false;
+        }
+
+        cout << "Preparation instructions validated successfully."
+             << endl;
+
+        return true;
+    }
+
+    // =========================================================
+    // 3. إعادة الجدولة عند تعطل الجهاز
+
+    void rescheduleAffectedAppointments(
+        vector<Appointment>& appointments,
+        string failedDevice,
+        vector<Device>& devices
+    )
+    {
+        cout << "\nDevice Failure Detected: "
+             << failedDevice << endl;
+
+        for (Appointment& appointment : appointments)
+        {
+            if (appointment.deviceName == failedDevice)
+            {
+                cout << "\nRescheduling appointment for patient: "
+                     << appointment.patientName << endl;
+
+                bool rescheduled = false;
+
+                for (Device& device : devices)
+                {
+                    if (
+                        device.available &&
+                        device.deviceName != failedDevice &&
+                        !device.availableSlots.empty()
+                    )
+                    {
+                        appointment.deviceName = device.deviceName;
+                        appointment.appointmentTime =
+                            device.availableSlots[0];
+
+                        cout << "New Device: "
+                             << appointment.deviceName << endl;
+
+                        cout << "New Time: "
+                             << appointment.appointmentTime << endl;
+
+                        rescheduled = true;
+                        break;
+                    }
+                }
+
+                if (!rescheduled)
+                {
+                    cout << "No alternative slots available."
+                         << endl;
+                }
+            }
+        }
+    }
+};
+
+int main()
+{
+    // الأجهزة
+    Device mri1(1, "MRI-1", false);
+    Device mri2(2, "MRI-2", true);
+
+    mri2.availableSlots.push_back("10:00 AM");
+    mri2.availableSlots.push_back("11:00 AM");
+
+    vector<Device> devices = {mri1, mri2};
+
+    AppointmentScheduler scheduler;
+
+    // =========================================================
+    // اختيار أفضل موعد
+
+
+    Appointment appointment =
+        scheduler.findBestAvailableSlot(
+            "Rayan",
+            "MRI Brain",
+            60,
+            HIGH,
+            devices
+        );
+
+    // =========================================================
+    // إضافة تعليمات التحضير
+
+
+    appointment.preparationInstructions =
+        "Do not eat 6 hours before the exam.";
+
+    if (
+        scheduler.validatePreparationInstructions(appointment)
+    )
+    {
+        appointment.confirmed = true;
+
+        cout << "\nAppointment Confirmed Successfully."
+             << endl;
+    }
+
+    // =========================================================
+    // قائمة المواعيد
+ 
+
+    vector<Appointment> appointments;
+    appointments.push_back(appointment);
+
+    // =========================================================
+    // إعادة الجدولة عند تعطل الجهاز
+  
+    scheduler.rescheduleAffectedAppointments(
+        appointments,
+        "MRI-1",
+        devices
+    );
+
+    return 0;
+}
+```
