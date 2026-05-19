@@ -103,7 +103,7 @@ Data Action: Extracts all appointmentIds linked to that machineId for future slo
                                   Selecting the equipment is mandatory.
                                  The appointment cannot be saved without patient information.
                                  The appointment cannot be confirmed if preparation instructions are missing.
-        * *GitHub Issue:* [ ]
+        * *GitHub Issue:* [ #1 , https://github.com/SE226G5/medichain-g5-t2-rad-sch/issues/1#issue-4478245822]
    *   Feature2:Automatic Slot Optimization
 *   **Description:** The system automatically selects the best available time when there are multiple requests on the same device.
 *   **Priority:** High.
@@ -113,7 +113,7 @@ Data Action: Extracts all appointmentIds linked to that machineId for future slo
                                   The system takes into account the duration of each scan.
                                   Higher priority cases are prioritized in case of conflict.
                                When priorities are equal, the system relies on the order of requests.
-        * *GitHub Issue:* [ ]
+        * *GitHub Issue:* [ #2 , https://github.com/SE226G5/medichain-g5-t2-rad-sch/issues/2#issue-4478302587]
       *   Feature3:Preparation Instructions Management
 *   **Description:** Managing the preparation instructions required before each examination.
 *   **Priority:** High.
@@ -124,7 +124,7 @@ Data Action: Extracts all appointmentIds linked to that machineId for future slo
                                   The status cannot be changed to Confirmed without instructions.
                                   Instructions are saved with the appointment.
                                   Instructions are sent to the notification system after saving.
-        * *GitHub Issue:* [ ]
+        * *GitHub Issue:* [ #3, https://github.com/SE226G5/medichain-g5-t2-rad-sch/issues/3#issue-4478313827]
          *   Feature4:Notification Delivery
 *   **Description:** Sending notifications to the patient when an appointment is created, modified, or rescheduled.
 *   **Priority:** High.
@@ -134,7 +134,7 @@ Data Action: Extracts all appointmentIds linked to that machineId for future slo
                                   Send notification when appointment is modified
                                   Send notification when rescheduled
                                   Submission status log: Success / Failed
-        * *GitHub Issue:* [ ]
+        * *GitHub Issue:* [#4 , https://github.com/SE226G5/medichain-g5-t2-rad-sch/issues/4#issue-4478322576 ]
          *   Feature5:Rescheduling After Device Failure
 *   **Description:** If the device malfunctions, all affected appointments should be automatically rescheduled.
 *   **Priority:** High.
@@ -145,7 +145,7 @@ Data Action: Extracts all appointmentIds linked to that machineId for future slo
                                   Maintain priority order as much as possible.
                                   Notify the patient and receptionist of the change.
                                   Record the reason for rescheduling.
-        * *GitHub Issue:* [ ]
+        * *GitHub Issue:* [#5 , https://github.com/SE226G5/medichain-g5-t2-rad-sch/issues/5#issue-4478329691 ]
            *   Feature6:Appointment Status Tracking
 *   **Description:** Track the status of the appointment from its creation to its confirmation, rescheduling, or cancellation.
 *   **Priority:** High.
@@ -154,7 +154,7 @@ Data Action: Extracts all appointmentIds linked to that machineId for future slo
         * *Acceptance Criteria:* Clearly display the current status.
                                   Update the status in real time or after any modification.
                                   Save the change log.
-        * *GitHub Issue:* [ ]
+        * *GitHub Issue:* [#6 , https://github.com/SE226G5/medichain-g5-t2-rad-sch/issues/6#issue-4478343088 ]
 
 ### 3.3 Performance Requirements
 * The system response time should be less than two seconds for most operations.
