@@ -1,12 +1,12 @@
-﻿# Module Name: [e.g., Surgery Optimization System]
+﻿# Module Name: [Imaging & Radiology Scheduling]
 ## Project: [Hospital ERP / MediChain]
-**Module Code:** [e.g., SURG-05]
+**Module Code:** [RAD-SCH]
 
 ---
 
 ## 📝 Module Overview
-Provide a brief description of what this module does based on the project text. (e.g., This module manages operating room schedules and prevents booking conflicts).
 
+The Radiology Scheduling module is responsible for managing imaging appointments and device availability within the hospital system. It supports appointment creation, automatic slot optimization, preparation instruction management, appointment status tracking, and rescheduling operations during equipment downtime.
 ---
 
 ## 👥 Team Members & Responsibilities
@@ -14,12 +14,12 @@ Provide a brief description of what this module does based on the project text. 
 
 | Member Name | Primary Responsibility | Assigned Tasks (Examples) | GitHub Profile |
 | :--- | :--- | :--- | :--- |
-| **Student 1 (Leader)** | Integration & Architecture | Component Diagrams, API Specs, Team Coordination | [Link] |
-| **Student 2** | Requirements & Analysis | Functional Requirements, Use Case Diagrams | [Link] |
+| **Student 1 (Leader)** | Integration & Architecture | Component Diagrams, API Specs, Team Coordination | [github.com/RayanKadebAlban0] |
+| **Student 2** | Requirements & Analysis | Functional Requirements, Use Case Diagrams | [https://github.com/zeinayahyamansour] |
 | **Student 3** | Process Modeling | Activity Diagrams, Business Rules Validation | [Link] |
-| **Student 4** | Data Design | ERD, Database Schema, Class Diagrams | [Link] |
-| **Student 5 (Optional)** | Interaction Design | Sequence Diagrams, Logic Flow | [Link] |
-| **Student 6 (Optional)** | UI/UX & Frontend | Wireframes, Interface Logic, User Stories | [Link] |
+| **Student 4** | Data Design | ERD, Database Schema, Class Diagrams | [https://github.com/naghamsattouf] |
+| **Student 5 (Optional)** | Interaction Design | Sequence Diagrams, Logic Flow | [https://github.com/GhinaFarokAhmad] |
+| **Student 6 (Optional)** | UI/UX & Frontend | Wireframes, Interface Logic, User Stories | [https://github.com/nourasharrof] |
 
 ---
 
