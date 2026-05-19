@@ -27,7 +27,7 @@ The Radiology Scheduling module is responsible for managing imaging appointments
 - [#] **Requirement Elicitation:** Completed list of FRs/NFRs.
 - [ ] **UML Behavioral Diagrams:** Use Case and Activity Diagrams.
 - [# ] **UML Structural Diagrams:** ERD and Class Diagrams.
-- [  ] **Dynamic Modeling:** Sequence Diagrams for core processes.
+- [ # ] **Dynamic Modeling:** Sequence Diagrams for core processes.
 - [ ] **Interface Design:** Low-fidelity Wireframes.
 
 ---
