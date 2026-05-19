@@ -197,8 +197,10 @@ The Link for Modification files: https://drive.google.com/drive/folders/1mvkTiiI
 * UML Diagram
 <img width="1208" height="902" alt="UML" src="https://github.com/user-attachments/assets/60c919e4-b97d-417f-8c27-5014ded4019f" />
 
-* Scema Diagram
+* Schema Diagram
   <img width="1280" height="819" alt="schema" src="https://github.com/user-attachments/assets/1fefb47f-c743-4996-88a5-8d412ab4f86e" />
+* Sequence Diagram
+  <img width="1025" height="891" alt="Sequence" src="https://github.com/user-attachments/assets/1d9caf07-7f83-4b44-8894-a63dc495c16d" />
 
 ### Appendix B: GitHub Traceability Checklist
 * **Instruction for Team Members:** Before submitting this SRS, ensure that:
