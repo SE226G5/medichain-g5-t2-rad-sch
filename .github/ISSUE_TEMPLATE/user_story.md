@@ -2,11 +2,17 @@
 **Related SRS Section:** [e.g., Section 3.2.1]
 
 ### 1. User Story
-Story 1:As a receptionist, I want to create a radiology appointment for a patient so that the patient can be scheduled for CT or MRI.
+Story 1:As a receptionist, I want to create a radiology appointment for a patient so that the patient can be scheduled 
+for CT or MRI.
+
 Story 2:As a system, I want to automatically select the best available appointment slot for a device so that scheduling is optimized according to exam duration, request order, and case priority.
+
 Story 3:As a Administrater Staff(receptionist), I want to add preparation instructions when creating an appointment so that the patient receives the required instructions before the exam.
+
 Story 4:As a notification system, I want to receive appointment events so that I can notify the patient about the booking status.
+
 Story 5:As a system, I want to reschedule all appointments affected by device downtime so that patients are assigned new available slots automatically.
+
 Story 6:As a receptionist, I want to view the current status of each appointment so that I can manage patient scheduling effectively.
 
 ### 2. Acceptance Criteria
