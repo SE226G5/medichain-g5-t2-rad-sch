@@ -156,8 +156,6 @@ Data Action: Extracts all appointmentIds linked to that machineId for future slo
                                   Save the change log.
         * *GitHub Issue:* [ ]
 
-*   [Repeat the structure above for all module features].
-
 ### 3.3 Performance Requirements
 * The system response time should be less than two seconds for most operations.
 * System pages should load in less than three seconds.
@@ -188,8 +186,19 @@ The RescheduleLog entity shall keep track of all appointments modified due to de
 ---
 
 ## 4. Appendices
-### Appendix A: Glossary & Models
-* **Instruction:** Include any Data Flow Diagrams (DFDs), Entity-Relationship Diagrams (ERDs), or detailed UI Mockups here.
+### Appendix A: Glossary & Models  
+The Link for Modification files: https://drive.google.com/drive/folders/1mvkTiiIOFc_3AgQurHO8cKC-pCd856Cc?usp=sharing
+* Data Flow Diagrams (DFDs)
+<img width="1061" height="1011" alt="DFD" src="https://github.com/user-attachments/assets/9efc0d24-06fb-47cf-8286-f6545c8079f7" />
+
+* Entity-Relationship Diagrams (ERDs)
+<img width="1280" height="551" alt="ERD" src="https://github.com/user-attachments/assets/eacfd878-3a3f-42ce-a73b-8713fc056449" />
+
+* UML Diagram
+<img width="1208" height="902" alt="UML" src="https://github.com/user-attachments/assets/60c919e4-b97d-417f-8c27-5014ded4019f" />
+
+* Scema Diagram
+  <img width="1280" height="819" alt="schema" src="https://github.com/user-attachments/assets/1fefb47f-c743-4996-88a5-8d412ab4f86e" />
 
 ### Appendix B: GitHub Traceability Checklist
 * **Instruction for Team Members:** Before submitting this SRS, ensure that:
