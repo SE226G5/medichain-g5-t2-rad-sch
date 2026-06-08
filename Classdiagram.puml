@@ -1,0 +1,124 @@
+@startuml
+title مخطط الفئات (Class Diagram) - قسم الأشعة في عيادة
+
+'======================
+' Classes
+'======================
+
+class Patient {
+  - patientId : int
+  - name : string
+  - dateOfBirth : date
+  - gender : string
+  - phone : string
+
+  + getInfo() : string
+  + updateInfo() : void
+}
+
+class ImagingOrder {
+  - orderId : int
+  - orderDate : date
+  - clinicalInfo : string
+  - priority : string
+  - status : string
+
+  + createOrder() : void
+  + cancelOrder() : void
+  + updateStatus(status : string) : void
+}
+
+class Doctor {
+  - doctorId : int
+  - name : string
+  - specialty : string
+  - phone : string
+
+  + createOrder() : ImagingOrder
+  + viewReports() : List<Report>
+}
+
+class Receptionist {
+  - employeeId : int
+  - name : string
+  - phone : string
+
+  + registerOrder(order : ImagingOrder) : void
+  + scheduleAppointment(order : ImagingOrder) : void
+}
+
+class ImagingExam {
+  - examId : int
+  - examDate : datetime
+  - modality : Modality
+  - bodyPart : string
+  - status : string
+
+  + startExam() : void
+  + completeExam() : void
+}
+
+class RadiologicTechnologist {
+  - technologistId : int
+  - name : string
+  - qualification : string
+
+  + performExam(exam : ImagingExam) : void
+  + updateExamStatus(exam : ImagingExam, status : string) : void
+}
+
+class Radiologist {
+  - radiologistId : int
+  - name : string
+  - qualification : string
+
+  + readExam(exam : ImagingExam) : Report
+  + updateReport(report : Report) : void
+}
+
+class Report {
+  - reportId : int
+  - reportDate : datetime
+  - findings : string
+  - impression : string
+  - conclusion : string
+
+  + createReport() : void
+  + updateReport() : void
+}
+
+class Image {
+  - imageId : int
+  - filePath : string
+  - imageType : string
+  - description : string
+
+  + getImage() : binary
+}
+
+enum Modality {
+  X_RAY
+  ULTRASOUND
+  CT
+  MRI
+  MAMMOGRAPHY
+  DENTAL_X_RAY
+}
+
+'======================
+' Relationships
+'======================
+
+Patient "1" -- "0..*" ImagingOrder : يطلب
+Doctor "1" -- "0..*" ImagingOrder : ينشئ
+Receptionist "1" -- "0..*" ImagingOrder : يسجل
+
+ImagingOrder "1" *-- "1..*" ImagingExam : يحتوي
+ImagingExam "1" *-- "1..*" Image : ينتج
+
+RadiologicTechnologist "1" -- "1..*" ImagingExam : ينفذ
+
+Radiologist "1" -- "1" Report : يكتب
+
+ImagingExam "1" -- "0..1" Report : نتيجة
+@enduml
