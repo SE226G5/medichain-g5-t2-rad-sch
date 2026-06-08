@@ -1,243 +1,200 @@
-```cpp
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
+// باستخدام لغة C#
 
-using namespace std;
+using System;
+using System.Collections.Generic;
 
-enum PriorityLevel
+namespace AppointmentSchedulingSystem
 {
-    LOW = 1,
-    MEDIUM = 2,
-    HIGH = 3,
-    EMERGENCY = 4
-};
-
-class Appointment
-{
-public:
-    int appointmentId;
-    string patientName;
-    string examType;
-    int duration; // minutes
-    string deviceName;
-    string appointmentTime;
-    PriorityLevel priority;
-    string preparationInstructions;
-    bool confirmed;
-
-    Appointment(
-        int id,
-        string patient,
-        string exam,
-        int dur,
-        string device,
-        string time,
-        PriorityLevel pr,
-        string prep
-    )
+    // 1. تعريف الـ Enum الخاص بالأولوية
+    public enum PriorityLevel
     {
-        appointmentId = id;
-        patientName = patient;
-        examType = exam;
-        duration = dur;
-        deviceName = device;
-        appointmentTime = time;
-        priority = pr;
-        preparationInstructions = prep;
-        confirmed = false;
+        LOW = 1,
+        MEDIUM = 2,
+        HIGH = 3,
+        EMERGENCY = 4
     }
-};
 
-class Device
-{
-public:
-    int deviceId;
-    string deviceName;
-    bool available;
-    vector<string> availableSlots;
-
-    Device(int id, string name, bool status)
+    // 2. الموعد (Appointment)
+    public class Appointment
     {
-        deviceId = id;
-        deviceName = name;
-        available = status;
-    }
-};
+        public int AppointmentId { get; set; }
+        public string PatientName { get; set; }
+        public string ExamType { get; set; }
+        public int Duration { get; set; } // minutes
+        public string DeviceName { get; set; }
+        public string AppointmentTime { get; set; }
+        public PriorityLevel Priority { get; set; }
+        public string PreparationInstructions { get; set; }
+        public bool Confirmed { get; set; }
 
-class AppointmentScheduler
-{
-public:
-
-    // =========================================================
-    // 1. اختيار أفضل موعد تلقائيًا
-
-    Appointment findBestAvailableSlot(
-        string patientName,
-        string examType,
-        int duration,
-        PriorityLevel priority,
-        vector<Device>& devices
-    )
-    {
-        for (Device& device : devices)
+        public Appointment(int id, string patient, string exam, int dur, string device, string time, PriorityLevel pr, string prep)
         {
-            if (device.available && !device.availableSlots.empty())
-            {
-                string bestSlot = device.availableSlots[0];
-
-                cout << "Best slot selected on device: "
-                     << device.deviceName << endl;
-
-                return Appointment(
-                    1,
-                    patientName,
-                    examType,
-                    duration,
-                    device.deviceName,
-                    bestSlot,
-                    priority,
-                    ""
-                );
-            }
+            AppointmentId = id;
+            PatientName = patient;
+            ExamType = exam;
+            Duration = dur;
+            DeviceName = device;
+            AppointmentTime = time;
+            Priority = pr;
+            PreparationInstructions = prep;
+            Confirmed = false;
         }
-
-        throw runtime_error("No available slots found.");
     }
 
-    // =========================================================
-    // 2. التحقق من تعليمات التحضير
-
-    bool validatePreparationInstructions(Appointment& appointment)
+    // 3.  الجهاز (Device)
+    public class Device
     {
-        if (appointment.preparationInstructions.empty())
-        {
-            cout << "Preparation instructions are required."
-                 << endl;
+        public int DeviceId { get; set; }
+        public string DeviceName { get; set; }
+        public bool Available { get; set; }
+        public List<string> AvailableSlots { get; set; }
 
-            return false;
+        public Device(int id, string name, bool status)
+        {
+            DeviceId = id;
+            DeviceName = name;
+            Available = status;
+            AvailableSlots = new List<string>(); 
         }
-
-        cout << "Preparation instructions validated successfully."
-             << endl;
-
-        return true;
     }
 
-    // =========================================================
-    // 3. إعادة الجدولة عند تعطل الجهاز
-
-    void rescheduleAffectedAppointments(
-        vector<Appointment>& appointments,
-        string failedDevice,
-        vector<Device>& devices
-    )
+    // 4.  نظام جدولة المواعيد (AppointmentScheduler)
+    public class AppointmentScheduler
     {
-        cout << "\nDevice Failure Detected: "
-             << failedDevice << endl;
-
-        for (Appointment& appointment : appointments)
+        // =========================================================
+        // 1. اختيار أفضل موعد تلقائيًا
+        public Appointment FindBestAvailableSlot(string patientName, string examType, int duration, PriorityLevel priority, List<Device> devices)
         {
-            if (appointment.deviceName == failedDevice)
+            foreach (Device device in devices)
             {
-                cout << "\nRescheduling appointment for patient: "
-                     << appointment.patientName << endl;
-
-                bool rescheduled = false;
-
-                for (Device& device : devices)
+                if (device.Available && device.AvailableSlots.Count > 0)
                 {
-                    if (
-                        device.available &&
-                        device.deviceName != failedDevice &&
-                        !device.availableSlots.empty()
-                    )
+                    string bestSlot = device.AvailableSlots[0];
+
+                    Console.WriteLine($"Best slot selected on device: {device.DeviceName}");
+
+                    return new Appointment(
+                        1,
+                        patientName,
+                        examType,
+                        duration,
+                        device.DeviceName,
+                        bestSlot,
+                        priority,
+                        ""
+                    );
+                }
+            }
+
+            throw new Exception("No available slots found.");
+        }
+
+        // =========================================================
+        // 2. التحقق من تعليمات التحضير
+        public bool ValidatePreparationInstructions(Appointment appointment)
+        {
+            if (string.IsNullOrEmpty(appointment.PreparationInstructions))
+            {
+                Console.WriteLine("Preparation instructions are required.");
+                return false;
+            }
+
+            Console.WriteLine("Preparation instructions validated successfully.");
+            return true;
+        }
+
+        // =========================================================
+        // 3. إعادة الجدولة عند تعطل الجهاز
+        public void RescheduleAffectedAppointments(List<Appointment> appointments, string failedDevice, List<Device> devices)
+        {
+            Console.WriteLine($"\nDevice Failure Detected: {failedDevice}");
+
+            foreach (Appointment appointment in appointments)
+            {
+                if (appointment.DeviceName == failedDevice)
+                {
+                    Console.WriteLine($"\nRescheduling appointment for patient: {appointment.PatientName}");
+
+                    bool rescheduled = false;
+
+                    foreach (Device device in devices)
                     {
-                        appointment.deviceName = device.deviceName;
-                        appointment.appointmentTime =
-                            device.availableSlots[0];
+                        if (device.Available && device.DeviceName != failedDevice && device.AvailableSlots.Count > 0)
+                        {
+                            appointment.DeviceName = device.DeviceName;
+                            appointment.AppointmentTime = device.AvailableSlots[0];
 
-                        cout << "New Device: "
-                             << appointment.deviceName << endl;
+                            Console.WriteLine($"New Device: {appointment.DeviceName}");
+                            Console.WriteLine($"New Time: {appointment.AppointmentTime}");
 
-                        cout << "New Time: "
-                             << appointment.appointmentTime << endl;
+                            rescheduled = true;
+                            break;
+                        }
+                    }
 
-                        rescheduled = true;
-                        break;
+                    if (!rescheduled)
+                    {
+                        Console.WriteLine("No alternative slots available.");
                     }
                 }
-
-                if (!rescheduled)
-                {
-                    cout << "No alternative slots available."
-                         << endl;
-                }
             }
         }
     }
-};
 
-int main()
-{
-    // الأجهزة
-    Device mri1(1, "MRI-1", false);
-    Device mri2(2, "MRI-2", true);
-
-    mri2.availableSlots.push_back("10:00 AM");
-    mri2.availableSlots.push_back("11:00 AM");
-
-    vector<Device> devices = {mri1, mri2};
-
-    AppointmentScheduler scheduler;
-
-    // =========================================================
-    // اختيار أفضل موعد
-
-
-    Appointment appointment =
-        scheduler.findBestAvailableSlot(
-            "Rayan",
-            "MRI Brain",
-            60,
-            HIGH,
-            devices
-        );
-
-    // =========================================================
-    // إضافة تعليمات التحضير
-
-
-    appointment.preparationInstructions =
-        "Do not eat 6 hours before the exam.";
-
-    if (
-        scheduler.validatePreparationInstructions(appointment)
-    )
+    // 5. نقطة تشغيل البرنامج
+    class Program
     {
-        appointment.confirmed = true;
+        static void Main(string[] args)
+        {
+            Device mri1 = new Device(1, "MRI-1", false);
+            Device mri2 = new Device(2, "MRI-2", true);
 
-        cout << "\nAppointment Confirmed Successfully."
-             << endl;
+            mri2.AvailableSlots.Add("10:00 AM");
+            mri2.AvailableSlots.Add("11:00 AM");
+
+            List<Device> devices = new List<Device> { mri1, mri2 };
+
+            AppointmentScheduler scheduler = new AppointmentScheduler();
+
+            // =========================================================
+            // اختيار أفضل موعد
+            try
+            {
+                Appointment appointment = scheduler.FindBestAvailableSlot(
+                    "Rayan",
+                    "MRI Brain",
+                    60,
+                    PriorityLevel.HIGH,
+                    devices
+                );
+
+                // =========================================================
+                // إضافة تعليمات التحضير
+                appointment.PreparationInstructions = "Do not eat 6 hours before the exam.";
+
+                if (scheduler.ValidatePreparationInstructions(appointment))
+                {
+                    appointment.Confirmed = true;
+                    Console.WriteLine("\nAppointment Confirmed Successfully.");
+                }
+
+                // =========================================================
+                // قائمة المواعيد
+                List<Appointment> appointments = new List<Appointment>();
+                appointments.Add(appointment);
+
+                // =========================================================
+                // إعادة الجدولة عند تعطل الجهاز
+                scheduler.RescheduleAffectedAppointments(
+                    appointments,
+                    "MRI-1",
+                    devices
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
     }
-
-    // =========================================================
-    // قائمة المواعيد
- 
-
-    vector<Appointment> appointments;
-    appointments.push_back(appointment);
-
-    // =========================================================
-    // إعادة الجدولة عند تعطل الجهاز
-  
-    scheduler.rescheduleAffectedAppointments(
-        appointments,
-        "MRI-1",
-        devices
-    );
-
-    return 0;
 }
-```
