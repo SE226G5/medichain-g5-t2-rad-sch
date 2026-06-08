@@ -15,7 +15,7 @@ The Radiology Scheduling module is responsible for managing imaging appointments
 | Member Name | Primary Responsibility | Assigned Tasks (Examples) | GitHub Profile |
 | :--- | :--- | :--- | :--- |
 | **Student 1 (Leader)** | Integration & Architecture | Component Diagrams, API Specs, Team Coordination | [https://github.com/RayanKadebAlban0] |
-| **Student 2** | Requirements & Analysis | Functional Requirements, Use Case Diagrams | [https://github.com/zeinayahyamansour] |
+| **Student 2** | Requirements & Analysis | NonFunctional Requirements, Use Case Diagrams,DataFlowDiagram| [https://github.com/zeinayahyamansour] |
 | **Student 3** | Process Modeling | Activity Diagrams, Business Rules Validation | [https://github.com/nourasharrof] |
 | **Student 4** | Data Design | ERD, Database Schema, Class Diagrams | [https://github.com/naghamsattouf] |
 | **Student 5 (Optional)** | Interaction Design | Sequence Diagrams, Logic Flow | [https://github.com/GhinaFarokAhmad] |
